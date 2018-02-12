@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.elegant-team.test</groupId>
+		<artifactId>transaction-test</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>transaction-test-global-transaction-mybatis</artifactId>
+	<name>transaction-test-global-transaction-mybatis</name>
+	<url>http://maven.apache.org</url>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>${mybatis.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>${mybatis-spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring-framework.version}</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>com.atomikos</groupId>
+			<artifactId>transactions-jdbc</artifactId>
+			<version>4.0.6</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>jta</artifactId>
+			<version>1.1</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.codehaus.btm/btm -->
+		<!-- <dependency> <groupId>org.codehaus.btm</groupId> <artifactId>btm</artifactId> 
+			<version>2.1.4</version> </dependency> -->
+
+	</dependencies>
+</project>
