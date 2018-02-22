@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+	<!-- 读入配置属性文件 -->
+	<context:property-placeholder location="classpath:properties/jdbc*.properties" />
+
+	<bean id="dataSource1" class="com.atomikos.jdbc.nonxa.AtomikosNonXADataSourceBean"
+		init-method="init" destroy-method="close">
+		<property name="uniqueResourceName" value="XA1DBMS" />
+		<!-- 基本属性driverClassName、 url、user、password -->
+		<property name="driverClassName" value="${jdbc1.driverClassName}" />
+		<property name="url" value="${jdbc1.url}" />
+		<property name="user" value="${jdbc1.username}" />
+		<property name="password" value="${jdbc1.password}" />
+	</bean>
+
+	<bean id="dataSource2" class="com.atomikos.jdbc.nonxa.AtomikosNonXADataSourceBean"
+		init-method="init" destroy-method="close">
+		<property name="uniqueResourceName" value="XA2DBMS" />
+		<!-- 基本属性driverClassName、 url、user、password -->
+		<property name="driverClassName" value="${jdbc2.driverClassName}" />
+		<property name="url" value="${jdbc2.url}" />
+		<property name="user" value="${jdbc2.username}" />
+		<property name="password" value="${jdbc2.password}" />
+	</bean>
+
+
+
+	<!-- 将数据源映射到sqlSessionFactory中 -->
+	<bean id="sqlSessionFactory1" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource1" />
+		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml" />
+		<!-- 自动扫描mapper.xml文件 -->
+		<property name="mapperLocations" value="classpath:mybatis/mapper1/*Mapper.xml" />
+	</bean>
+
+	<bean id="sqlSessionFactory2" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource2" />
+		<property name="configLocation" value="classpath:mybatis/mybatis-config.xml" />
+		<!-- 自动扫描mapper.xml文件 -->
+		<property name="mapperLocations" value="classpath:mybatis/mapper2/*Mapper.xml" />
+	</bean>
+
+	<!-- Mapper接口扫描包路径 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage"
+			value="org.transaction.test.global_transaction.mybatis.mapper1"></property>
+		<!-- 当生成代理的mapper实现的时候，根据此处配置，将不同的sqlSessionFactory注入不同的mapper -->
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory1" />
+	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage"
+			value="org.transaction.test.global_transaction.mybatis.mapper2"></property>
+		<!-- 当生成代理的mapper实现的时候，根据此处配置，将不同的sqlSessionFactory注入不同的mapper -->
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory2" />
+	</bean>
+
+	<!--======= 事务配置 Begin ================= -->
+	<!-- 事务管理器（由Spring管理MyBatis的事务） -->
+	<bean id="userTransaction" class="com.atomikos.icatch.jta.UserTransactionImp">
+		<property name="transactionTimeout" value="300" />
+	</bean>
+
+	<bean id="springTransactionManager"
+		class="org.springframework.transaction.jta.JtaTransactionManager">
+		<property name="userTransaction" ref="userTransaction" />
+	</bean>
+
+	<tx:annotation-driven transaction-manager="springTransactionManager" />
+	<!--======= 事务配置 End =================== -->
+
+	
+
+
+</beans>

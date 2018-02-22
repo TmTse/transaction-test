@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-config.dtd"> 
+<configuration>	
+  <!--整合Spring的时候 只有 settings typeAliases 两个个属性有用, 其余的要在spring总配置文件中会覆盖-->
+  <settings>
+	  <setting name="logImpl" value="STDOUT_LOGGING" />
+  </settings>
+  <!-- 别名 -->
+  <typeAliases>
+  </typeAliases>
+</configuration>
