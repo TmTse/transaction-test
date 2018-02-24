@@ -9,7 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.transaction.test.global_transaction.mybatis.service.TransactionPropagationExample;
 
 /**
- * 测试各种多数据源下，不使用JTA事务的情况下，spring事务传播属性。
+ * 测试各种多数据源下，使用JTA事务的情况下，spring事务传播属性。
  * 
  * @author Administrator
  *
