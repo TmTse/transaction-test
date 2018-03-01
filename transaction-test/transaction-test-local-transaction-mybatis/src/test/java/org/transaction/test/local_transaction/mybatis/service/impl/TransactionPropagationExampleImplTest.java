@@ -10,7 +10,7 @@ import org.transaction.test.local_transaction.mybatis.service.TransactionPropaga
 
 /**
  * 测试各种spring事务传播属性。
- * @author Administrator
+ * @author JerryTse
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
