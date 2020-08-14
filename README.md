@@ -7,3 +7,6 @@
  transaction-test-global-transaction-mybatis（全局事务，分布式事务）    
  
  每个项目中src/main/resources路径下都有对应的SQL文件，运行src/test/java路径下Junit测试方法前需要先执行相应的SQL文件。
+
+测试说明：
+https://segmentfault.com/a/1190000013341344
